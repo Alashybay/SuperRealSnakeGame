@@ -1,4 +1,3 @@
-// File: src/player/HumanPlayer.java
 package player;
 
 import java.awt.event.KeyAdapter;
@@ -6,7 +5,6 @@ import java.awt.event.KeyEvent;
 import java.awt.Color;
 import java.util.Optional;
 
-import core.Snake;
 import enums.ControlType;
 import enums.Direction;
 

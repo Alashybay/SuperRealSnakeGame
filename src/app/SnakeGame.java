@@ -1,4 +1,3 @@
-// File: src/app/SnakeGame.java
 package app;
 
 import core.Board;
@@ -86,11 +85,9 @@ public class SnakeGame extends JPanel implements Runnable {
 
     /** Pauses the loop and shows a modal dialog. */
     private void togglePauseMenu() {
-        // flip paused
         synchronized (pauseLock) {
             paused = true;
         }
-
         // find our top‐level frame
         Window w = SwingUtilities.getWindowAncestor(this);
 

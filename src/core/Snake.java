@@ -1,4 +1,3 @@
-// File: src/core/Snake.java
 package core;
 
 import java.awt.Graphics;

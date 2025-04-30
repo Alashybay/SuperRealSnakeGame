@@ -40,3 +40,15 @@ public enum Direction {
         }
     }
 }
+
+// public enum Direction {
+//     UP {
+//         @Override public Direction opposite() { return DOWN; }
+//     },
+//     DOWN {
+//         @Override public Direction opposite() { return UP; }
+//     },
+//     // … and so on for LEFT, RIGHT
+    
+//     public abstract Direction opposite();
+// }

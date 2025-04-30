@@ -8,17 +8,32 @@ import enums.Direction;
 import java.awt.Color;
 import java.awt.Point;
 
+/**
+ * The AIPlayer class demonstrates several Object-Oriented Programming (OOP) concepts:
+ * - **Inheritance**: AIPlayer extends the Player class, inheriting its properties and methods.
+ * - **Encapsulation**: The `food` field is private, ensuring controlled access through the constructor.
+ * - **Polymorphism**: The `move` method is overridden to provide specific behavior for AIPlayer.
+ * - **Abstraction**: The Player class provides a general abstraction for players, while AIPlayer implements specific AI behavior.
+ */
 public class AIPlayer extends Player {
-    private final Food food;
+    private final Food food; // Encapsulation: private field with controlled access
 
+    /**
+     * Constructor for AIPlayer.
+     * Demonstrates encapsulation by initializing private fields.
+     */
     public AIPlayer(String name, int sx, int sy, Food food) {
-        super(name, sx, sy, Color.MAGENTA);
+        super(name, sx, sy, Color.MAGENTA); // Inheritance: calling the superclass constructor
         this.food = food;
     }
 
+    /**
+     * Overrides the move method from the Player class.
+     * Demonstrates polymorphism by providing specific behavior for AIPlayer.
+     */
     @Override
     public void move() {
-        Snake snake = getSnake();
+        Snake snake = getSnake(); // Encapsulation: accessing the snake through a getter
         Direction current = snake.getDirection();
 
         // compute vector to food
@@ -38,12 +53,13 @@ public class AIPlayer extends Player {
 
         // pick a valid direction that won't immediately collide with its own body
         Direction chosen = chooseSafeDirection(snake, current, primary, secondary);
-        snake.setDirection(chosen);
+        snake.setDirection(chosen); // Encapsulation: modifying the snake's state through a setter
         snake.move();
     }
 
     /**
      * Attempts directions in order, skipping any that would step on its own body.
+     * Demonstrates abstraction by hiding the complexity of choosing a safe direction.
      */
     private Direction chooseSafeDirection(Snake snake, Direction current,
                                           Direction d1, Direction d2) {
@@ -64,6 +80,10 @@ public class AIPlayer extends Player {
         return current;
     }
 
+    /**
+     * Checks if moving in a given direction would cause the snake to collide with itself.
+     * Demonstrates encapsulation by keeping collision logic private.
+     */
     private boolean wouldSelfCollide(Snake snake, Direction dir) {
         Point head = snake.getBody().peekFirst().getPosition();
         Point next = switch (dir) {
@@ -81,10 +101,18 @@ public class AIPlayer extends Player {
         return false;
     }
 
+    /**
+     * Helper method to check if the current direction prefers horizontal movement.
+     * Demonstrates abstraction by simplifying direction preference logic.
+     */
     private boolean dxPreferred(Direction dir) {
         return dir == Direction.LEFT || dir == Direction.RIGHT;
     }
 
+    /**
+     * Helper method to check if the current direction prefers vertical movement.
+     * Demonstrates abstraction by simplifying direction preference logic.
+     */
     private boolean dyPreferred(Direction dir) {
         return dir == Direction.UP || dir == Direction.DOWN;
     }

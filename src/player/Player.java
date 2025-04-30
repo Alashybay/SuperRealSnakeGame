@@ -2,8 +2,15 @@ package player;
 
 import core.Snake;
 import java.awt.Color;
+import core.Movable;
 
-public abstract class Player {
+/**
+ * Abstract class demonstrating:
+ * - Abstraction: defines common behavior
+ * - Inheritance: subclassed by HumanPlayer and AIPlayer
+ * - Encapsulation: private fields with getters/setters
+ */
+public abstract class Player implements Movable {
     private final String name;
     private final Snake snake;
     private int score;
@@ -16,25 +23,23 @@ public abstract class Player {
         this.score = 0;
     }
 
+    // Dynamic polymorphism: subclasses override this method
+    @Override
     public abstract void move();
 
-    public Snake getSnake() {
-        return snake;
-    }
+    // Encapsulation via getters
+    public Snake getSnake() { return snake; }
+    public String getName() { return name; }
+    public Color getColor() { return color; }
+    public int getScore() { return score; }
 
-    public String getName() {
-        return name;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
+    // Encapsulated method to modify state
     public void addScore(int delta) {
-        score = Math.max(0, score + delta);
+        this.score = Math.max(0, this.score + delta);
+    }
+
+    // Static polymorphism: overloaded setter
+    public void setScore(int score) {
+        this.score = Math.max(0, score);
     }
 }

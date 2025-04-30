@@ -7,6 +7,45 @@ import java.awt.event.ActionEvent;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * The MainMenu class represents the main menu of the Snake Adventures game.
+ * It demonstrates several Object-Oriented Programming (OOP) concepts:
+ *
+ * 1. **Encapsulation**:
+ *    - The `frame` field is private, ensuring that it cannot be accessed directly from outside the class.
+ *    - Methods like `makeButton`, `launchGame`, and `showScores` encapsulate specific behaviors, 
+ *      hiding implementation details from the rest of the program.
+ *
+ * 2. **Abstraction**:
+ *    - The `makeButton` method abstracts the repetitive process of creating and configuring buttons,
+ *      making the code more readable and reusable.
+ *    - The `launchGame` and `showScores` methods abstract specific actions triggered by the buttons.
+ *
+ * 3. **Inheritance**:
+ *    - While this class does not directly extend another class, it utilizes inheritance through the 
+ *      use of `JFrame` and `JButton`, which are part of the Swing library. These classes inherit 
+ *      behavior from their respective parent classes in the Java Swing framework.
+ *
+ * 4. **Polymorphism**:
+ *    - Polymorphism is demonstrated through the use of lambda expressions for `ActionListener` 
+ *      (e.g., `(ActionEvent e) -> action.run()`), allowing different behaviors to be passed 
+ *      dynamically to buttons.
+ *
+ * 5. **Static Members**:
+ *    - The `PANEL_WIDTH` and `PANEL_HEIGHT` constants are declared as `static final`, ensuring 
+ *      that they are shared across all instances of the class and cannot be modified.
+ *
+ * 6. **Composition**:
+ *    - The `MainMenu` class is composed of several Swing components (`JFrame`, `JButton`), 
+ *      demonstrating the "has-a" relationship.
+ *
+ * 7. **Single Responsibility Principle (SRP)**:
+ *    - The `MainMenu` class is responsible only for managing the main menu of the game, adhering 
+ *      to the SRP principle.
+ *
+ * This class serves as the entry point for the game, initializing the main menu and handling 
+ * user interactions to launch different game modes or display the scoreboard.
+ */
 public class MainMenu {
     private final JFrame frame;
     private static final int PANEL_WIDTH  = 600;

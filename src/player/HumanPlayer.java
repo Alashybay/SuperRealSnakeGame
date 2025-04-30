@@ -1,24 +1,23 @@
 package player;
 
+import core.Movable;
+import enums.ControlType;
+import enums.Direction;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Color;
 import java.util.Optional;
 
-import enums.ControlType;
-import enums.Direction;
-
+/**
+ * Concrete subclass demonstrating:
+ * - Inheritance from Player
+ * - Method overriding for behavior
+ * - Association: uses ControlType and Direction enums
+ */
 public class HumanPlayer extends Player {
     private Direction nextDir;
     private final ControlType controls;
 
-    /**
-     * @param name     player name
-     * @param sx       snake start X cell
-     * @param sy       snake start Y cell
-     * @param controls which keyset to use (ARROWS or WASD)
-     * @param snakeColor the color to draw this player's snake
-     */
     public HumanPlayer(String name, int sx, int sy, ControlType controls, Color snakeColor) {
         super(name, sx, sy, snakeColor);
         this.controls = controls;
@@ -26,15 +25,10 @@ public class HumanPlayer extends Player {
 
     @Override
     public void move() {
-        if (nextDir != null) {
-            getSnake().setDirection(nextDir);
-        }
+        if (nextDir != null) getSnake().setDirection(nextDir);
         getSnake().move();
     }
 
-    /**
-     * Returns a KeyAdapter that listens either to the arrow keys or WASD, depending on 'controls'.
-     */
     public Optional<KeyAdapter> getKeyAdapter() {
         return Optional.of(new KeyAdapter() {
             @Override

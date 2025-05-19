@@ -1,5 +1,6 @@
 package util;
 
+import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,39 +11,51 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Demonstrates:
- * - Encapsulation: private fields and controlled access
- * - Static Polymorphism: overloaded methods
- * - Parametric Polymorphism: use of generics (Map<String, Integer>)
+ * ScoreManager handles score persistence, demonstrating encapsulation, information hiding,
+ * polymorphism (overloading, parametric), and exception handling.
  */
 public class ScoreManager {
+    // Encapsulation: Private static field for file path
     private static final Path SCORE_FILE = Paths.get("resources/player_scores.txt");
 
-    // Load with default file (overloaded)
+    // Abstraction & Information Hiding: Hides file loading logic
+    // Parametric Polymorphism: Uses Map<String, Integer> for type safety
     public static Map<String, Integer> load() {
         return load(SCORE_FILE);
     }
 
-    // Static polymorphism: overloaded method
+    // Polymorphism (Overloading): Overloaded method for custom file path
+    // Exception Handling: Handles IOException and NumberFormatException
     public static Map<String, Integer> load(Path filePath) {
         Map<String, Integer> map = new LinkedHashMap<>();
         try {
             for (String line : Files.readAllLines(filePath)) {
                 String[] parts = line.split(":");
-                map.put(parts[0].trim(), Integer.parseInt(parts[1].trim()));
+                if (parts.length != 2) {
+                    System.err.println("Invalid score format: " + line);
+                    continue;
+                }
+                try {
+                    map.put(parts[0].trim(), Integer.parseInt(parts[1].trim()));
+                } catch (NumberFormatException e) {
+                    System.err.println("Invalid score value: " + parts[1]);
+                }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            // Exception Handling: User feedback via JOptionPane
+            JOptionPane.showMessageDialog(null, "Failed to load scores: " + e.getMessage(),
+                                          "Error", JOptionPane.ERROR_MESSAGE);
         }
         return map;
     }
 
-    // Save with default behavior
+    // Abstraction: Hides file saving logic
     public static void save(Map<String, Integer> map) {
         save(map, false);
     }
 
-    // Static polymorphism: overloaded method with append option
+    // Polymorphism (Overloading): Overloaded method with append option
+    // Exception Handling: Uses try-with-resources for safe file handling
     public static void save(Map<String, Integer> map, boolean append) {
         try (BufferedWriter w = Files.newBufferedWriter(
                 SCORE_FILE,
@@ -52,16 +65,17 @@ public class ScoreManager {
                 w.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Failed to save scores: " + e.getMessage(),
+                                          "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    // Update and optionally persist immediately
+    // Abstraction: Hides score update logic
     public static void updateScore(String player, int delta) {
         updateScore(player, delta, true);
     }
 
-    // Static polymorphism: overloaded updateScore
+    // Polymorphism (Overloading): Overloaded method with persistence option
     public static void updateScore(String player, int delta, boolean persistImmediately) {
         Map<String, Integer> scores = load();
         scores.put(player, Math.max(0, scores.getOrDefault(player, 0) + delta));
